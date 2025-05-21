@@ -1,0 +1,13 @@
+#!url= https://raw.githubusercontent.com/itcast-l/shadowrocket-module/main/Picsew.module
+#!name=Picsew解锁订阅
+#!desc=Picsew解锁订阅
+#软件版本:3.9.4
+#脚本功能:解锁专业版，滑动截屏
+#更新时间:2023-01-29
+#使用声明：️仅供学习交流，🈲️商业用途
+
+[Script]
+Picsew解锁订阅 = type=http-response,pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$,requires-body=1,max-size=0,script-path=https://github.com/itcast-l/shadowrocket-module/raw/main/js/Picsew.js
+
+[MITM]
+hostname= %APPEND% buy.itunes.apple.com
