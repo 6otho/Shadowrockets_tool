@@ -1,7 +1,4 @@
 
-Tg：https://t.me/it_cast
-
-
 ## 介绍
 
 本文档是个人 Shadowrocket 脚本模块的集合。
