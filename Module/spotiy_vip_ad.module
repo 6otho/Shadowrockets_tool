@@ -1,19 +1,14 @@
-#!name=Spotify vip_ad2
+#!name=Spotify vip_ad3
 #!desc=适用于spotify
 [Rule]
-# 拦截所有 Spotify QUIC 流量
 AND,((DOMAIN-SUFFIX,spotify.com),(PROTOCOL,QUIC)),REJECT
 
 [Script]
-# Spotify 破解脚本
-spotify.crack = type=http-response,pattern=^https:\/\/.+\.spotify\.com(:443)?\/(?:bootstrap|user-customization-service)(\?(.*))?$,requires-body=1,binary-body-mode=1,timeout=3,script-path=https://raw.githubusercontent.com/001ProMax/Surge/refs/heads/main/Script/Spotify.Crack.Dev.js,argument="{"tab":{{{移除底栏创建按钮|true}}},"useractivity":{{{启用Apple设备接力|true}}}}",tag=Protobuf
+spotify.crack = type=http-response,pattern=^https:\/\/.+\.spotify\.com(:443)?\/(?:bootstrap|user-customization-service)(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/001ProMax/Surge/refs/heads/main/Script/Spotify.Crack.Dev.js,argument="{"tab":{{{移除底栏创建按钮}}},"useractivity":{{{启用Apple设备接力}}}}",tag=Protobuf
 
 [Map Local]
-# pendragon -> 返回空字典
 ^https:\/\/.+\.spotify\.com\/pendragon\/ data-type=text data="{}" status-code=200
-# artist/album 接口 platform=iphone -> 切换为 platform=ipad
 ^https:\/\/(.+)\.spotify\.com(:443)?\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone map-to-url=https://$1.spotify.com$2/$3/$4platform=ipad
 
 [MITM]
-# 启用对 Spotify HTTPS 的解密
 hostname = %APPEND% *.spotify.com
