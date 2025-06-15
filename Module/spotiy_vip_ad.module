@@ -1,4 +1,5 @@
 #!name=Spotify vip_ad
+#!desc=适用于spotify
 [Rule]
 # 拦截所有 Spotify QUIC 流量
 AND,((DOMAIN-SUFFIX,spotify.com),(PROTOCOL,QUIC)),REJECT
