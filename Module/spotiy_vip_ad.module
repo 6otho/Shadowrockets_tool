@@ -1,14 +1,21 @@
-#!name=Spotify vip_ad3
-#!desc=适用于spotify
-[Rule]
-AND,((DOMAIN-SUFFIX,spotify.com),(PROTOCOL,QUIC)),REJECT
+#!name=Spotify Crack Enhancer  
+#!desc=适用于 Spotify Web，提供底栏按钮隐藏和 Apple 设备接力功能  
+#!arguments=移除底栏创建按钮:true,启用Apple设备接力:true  
+#!arguments-desc=- 开关参数：[true, false]  
+  1. 移除底栏创建按钮：隐藏底部“创建”图标  
+  2. 启用Apple设备接力：开启 Apple Handoff 功能  
 
-[Script]
-spotify.crack = type=http-response,pattern=^https:\/\/.+\.spotify\.com(:443)?\/(?:bootstrap|user-customization-service)(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/001ProMax/Surge/refs/heads/main/Script/Spotify.Crack.Dev.js,argument="{"tab":{{{移除底栏创建按钮}}},"useractivity":{{{启用Apple设备接力}}}}",tag=Protobuf
+[Rule]  
+AND,((DOMAIN-SUFFIX,spotify.com),(PROTOCOL,QUIC)),REJECT  
 
-[Map Local]
-^https:\/\/.+\.spotify\.com\/pendragon\/ data-type=text data="{}" status-code=200
-^https:\/\/(.+)\.spotify\.com(:443)?\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone map-to-url=https://$1.spotify.com$2/$3/$4platform=ipad
+[Script]  
+spotify.crack = type=http-response,pattern=^https:\/\/.+\.spotify\.com(:443)?\/(?:bootstrap|user-customization-service)(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/001ProMax/Surge/refs/heads/main/Script/Spotify.Crack.Dev.js,argument="{"tab":{{{移除底栏创建按钮}}},"useractivity":{{{启用Apple设备接力}}}}",tag=Protobuf  
 
-[MITM]
-hostname = %APPEND% *.spotify.com
+[Map Local]  
+# pendragon 路径返回空字典  
+^https:\/\/.+\.spotify\.com\/pendragon\/ data-type=text data="{}" status-code=200  
+# artist/album 接口将 platform=iphone 强制替换为 platform=ipad  
+^https:\/\/(.+)\.spotify\.com(:443)?\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone map-to-url=https://$1.spotify.com$2/$3/$4platform=ipad  
+
+[MITM]  
+hostname = %APPEND% *.spotify.com  
