@@ -4,16 +4,16 @@
 # 拦截所有 Spotify QUIC 流量
 AND,((DOMAIN-SUFFIX,spotify.com),(PROTOCOL,QUIC)),REJECT
 
+[Script]
+# Spotify 破解脚本
+spotify.crack = type=http-response,pattern=^https:\/\/.+\.spotify\.com(:443)?\/(?:bootstrap|user-customization-service)(\?(.*))?$,requires-body=1,binary-body-mode=1,timeout=3,script-path=https://raw.githubusercontent.com/001ProMax/Surge/refs/heads/main/Script/Spotify.Crack.Dev.js,argument={"tab":{{{移除底栏创建按钮}}},"useractivity":{{{启用Apple设备接力}}}},tag=Protobuf
+
 [Rewrite]
-# 拒绝 pendragon 路径（返回空字典）
+# 拒绝 pendragon 路径
 ^https:\/\/.+\.spotify\.com\/pendragon\/ url reject-dict
 # 将 artist/album 接口中的 platform=iphone 强制替换为 platform=ipad
-^https:\/\/(.+)\.spotify\.com(:443)?\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone url https://$1.spotify.com$2/$3/$4platform=ipad
-
-[Script]
-# Spotify 破解模块
-spotify.crack = type=http-response,pattern=^https:\/\/.+\.spotify\.com(:443)?\/(?:bootstrap|user-customization-service)(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/001ProMax/Surge/refs/heads/main/Script/Spotify.Crack.Dev.js,argument={"tab":{{{移除底栏创建按钮}}},"useractivity":{{{启用Apple设备接力}}}},tag=Protobuf
+^https:\/\/(.+)\.spotify\.com(:443)?\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone url=https://$1.spotify.com$2/$3/$4platform=ipad
 
 [MITM]
-# 对 spotify 接口进行 HTTPS 解密
-hostname = *.spotify.com
+# 对 Spotify 域名开启 HTTPS 解密
+hostname = %APPEND% *.spotify.com
